@@ -126,6 +126,40 @@ ppt-svg-generator/
 
 ---
 
+## ⚠️ 注意事项
+
+### Skill 安装路径
+
+oh-my-opencode 从以下路径加载用户 Skills：
+
+| 路径 | 作用域 |
+|------|--------|
+| `~/.config/opencode/skill/` | OpenCode 全局 |
+| `.opencode/skill/` | 项目级 |
+| `~/.claude/skills/` | Claude Code 兼容（用户级） |
+| `.claude/skills/` | Claude Code 兼容（项目级） |
+
+> ⚠️ 注意是 `skill`（单数），不是 `skills`（复数）！
+
+### SKILL.md 的 `allowed-tools` 格式
+
+`allowed-tools` 字段必须使用**单行字符串格式**（空格分隔），**不能使用 YAML 列表格式**：
+
+```yaml
+# ✅ 正确 - 单行字符串格式
+allowed-tools: Read Write Glob Grep Bash WebSearch WebFetch
+
+# ❌ 错误 - YAML 列表格式（会导致 Skill 无法加载）
+allowed-tools:
+  - Read
+  - Write
+  - Glob
+```
+
+**原因**：oh-my-opencode 的解析代码对 `allowed-tools` 调用 `.split()` 方法，期望输入是字符串。如果使用 YAML 列表格式，解析后会变成数组，调用 `.split()` 会导致错误，从而使整个 Skill 加载失败且无任何报错提示。
+
+---
+
 ## 🤝 贡献
 
 欢迎提交 Issue 和 Pull Request！
