@@ -23,6 +23,12 @@ allowed-tools: Read Write Glob Grep Bash WebSearch WebFetch
 │                        PPT SVG 生成流程                          │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
+│  ⚡ 快捷方式  /ppt-quick @文稿.md --style=风格名称                 │
+│              ↓ 一键完成全流程，无需交互                           │
+│              ↓ 适合已明确需求的用户                               │
+│                                                                 │
+│  ─────────────────── 或分步执行 ───────────────────              │
+│                                                                 │
 │  步骤 1️⃣  /ppt-analyze @文稿.md                                  │
 │           ↓ 分析文稿，输出页面结构清单                            │
 │           ↓ 你可以修改、调整页面拆解结果                          │
@@ -39,25 +45,76 @@ allowed-tools: Read Write Glob Grep Bash WebSearch WebFetch
 └─────────────────────────────────────────────────────────────────┘
 ```
 
-**💡 提示**：三个命令支持独立执行，但推荐按顺序操作以获得最佳效果。
+**💡 提示**：
+- 快捷命令 `/ppt-quick` 适合使用预设风格快速出图
+- 分步命令适合需要自定义配色或调整页面结构的场景
 
 ---
 
 ## 🔧 可用命令
 
+### `/ppt-quick` - ⚡ 一键生成（推荐）
+
+**用途**：一键完成「文稿分析 → 风格设计 → SVG 生成」全流程
+
+**语法**：
+```
+/ppt-quick @文稿.md [--style=风格名称] [--output=输出目录]
+```
+
+**参数**：
+| 参数 | 必需 | 默认值 | 说明 |
+|------|------|--------|------|
+| `@文稿.md` | ✅ | - | 要转换的 Markdown 文件 |
+| `--style` | ❌ | `品牌蓝` | 预设风格名称 |
+| `--output` | ❌ | `./ppt-output/` | 输出目录 |
+
+**可选风格**：`极简主义`、`商务咨询`、`科技暗黑`、`瑞士平面`、`品牌蓝`
+
+**示例**：
+```bash
+# 最简用法（使用默认风格）
+/ppt-quick @report.md
+
+# 指定风格
+/ppt-quick @report.md --style=科技暗黑
+
+# 指定风格和输出目录
+/ppt-quick @annual-report.md --style=商务咨询 --output=./slides/
+
+# 自然语言方式
+帮我把 @report.md 快速转成 PPT，用极简主义风格
+一键生成 PPT，文稿是 @proposal.md，用科技暗黑风格
+```
+
+**详细指令**：[commands/quick.md](commands/quick.md)
+
+---
+
 ### `/ppt-analyze` - 文稿分析
 
 **用途**：分析 Markdown 文稿，提取核心内容，输出结构化的页面清单
 
-**使用方式**：
+**语法**：
 ```
-/ppt-analyze @你的文稿.md
+/ppt-analyze @文稿.md
 ```
 
 **输出**：
 - 每页 PPT 的标题、内容要点、重点信息
 - 推荐的页面类型（封面、观点、图表、流程等）
 - 信息密度评估（低/中/高）
+
+**示例**：
+```bash
+# 分析文稿
+/ppt-analyze @annual-report.md
+
+# 自然语言方式
+帮我分析这份文稿 @report.md，拆解成 PPT 页面
+把 @proposal.md 转成 PPT 结构
+分析 @meeting-notes.md 的内容，看看可以做成几页 PPT
+```
 
 **详细指令**：[commands/analyze.md](commands/analyze.md)
 
@@ -67,7 +124,7 @@ allowed-tools: Read Write Glob Grep Bash WebSearch WebFetch
 
 **用途**：选择或定制 PPT 视觉风格
 
-**使用方式**：
+**语法**：
 ```
 /ppt-design
 ```
@@ -86,6 +143,24 @@ allowed-tools: Read Write Glob Grep Bash WebSearch WebFetch
 3. 科技暗黑 - 霓虹未来，玻璃拟态
 4. 瑞士平面 - 强烈对比，包豪斯风
 5. 品牌蓝 - 蓝紫青配色，现代专业
+
+**示例**：
+```bash
+# 启动风格选择（交互式菜单）
+/ppt-design
+
+# 自然语言方式 - 直接指定预设
+我想用商务咨询风格
+选择科技暗黑风格
+
+# 自然语言方式 - 自定义风格
+用我们公司的配色，主色是 #FF6B00，背景用深色
+我想要一个温暖的橙色系风格
+
+# 自然语言方式 - AI 推荐
+根据文稿内容帮我推荐一个合适的风格
+不知道用什么风格，帮我分析一下
+```
 
 **详细指令**：[commands/design.md](commands/design.md)
 
@@ -122,16 +197,27 @@ allowed-tools: Read Write Glob Grep Bash WebSearch WebFetch
 
 ## ⚡ 快速开始
 
-如果你想跳过分步操作，可以一次性说明需求：
+**方式一：使用快捷命令（推荐）**
 
-```
-我有一份文稿 @xxx.md，请帮我：
-1. 分析内容，拆解成 PPT 页面
-2. 使用「品牌蓝」风格
-3. 生成所有 SVG 文件
+```bash
+/ppt-quick @report.md --style=科技暗黑
 ```
 
-我会按流程依次执行，并在关键节点询问你的意见。
+一键完成全流程，无需交互确认。
+
+**方式二：自然语言**
+
+```
+帮我把 @report.md 快速转成 PPT，用品牌蓝风格
+```
+
+**方式三：分步执行（需要精细控制时）**
+
+```bash
+/ppt-analyze @report.md   # 1. 分析文稿，可调整拆解结果
+/ppt-design               # 2. 选择/自定义风格
+/ppt-generate             # 3. 生成 SVG 文件
+```
 
 ---
 
