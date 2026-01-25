@@ -258,3 +258,5 @@ allowed-tools: Read Write Glob Grep Bash WebSearch WebFetch
 - ✅ 16:9 标准比例 (1920×1080)
 - ✅ 中文字体兼容 Windows/Mac
 - ✅ 圆角、颜色、定位均针对 PPT 优化
+
+**👀 效果预览**：[查看 5 种风格对比](svg-comparison.html) - 在浏览器中打开可直观对比各风格效果
