@@ -18,3 +18,7 @@ Thumbs.db
 # 临时文件
 *.tmp
 *.temp
+
+# 会话目录
+.ppt-session/
+.sisyphus/
